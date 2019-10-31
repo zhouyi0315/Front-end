@@ -1,5 +1,5 @@
 module.exports = {
-    entry: "./index.js",
+    entry: "./src/index.js",
     module: {
         rules: [
             {
@@ -14,7 +14,7 @@ module.exports = {
             },
             {
                 test: /\.css$/i,
-                use: [require.resolve('./component-css-loader.js')]
+                use: [require.resolve('./loader/component-css-loader.js')]
             }
         ]
     },

@@ -7,6 +7,7 @@ const STATE_SYMBOL = Symbol('state')
 import CollectionStore from './CollectionStore'
 import Img from './Img'
 import css from './ListView.css'
+import Carousel from './Carousel/index'
 
 let styleElement = document.createElement('style')
 styleElement.innerHTML = css
@@ -32,7 +33,7 @@ export default class ListView {
     created () {
         this.root = document.createElement('div')
         this.root.classList.add('list-view')
-        this.render().appendTo(this.root)
+        //this.render().appendTo(this.root)
     }
     mounted () {
 
@@ -46,15 +47,14 @@ export default class ListView {
 
     }
     render () {
-        let mostFavourateShops = []
-        let recommendedShops = []
-        if (this[ATTRIBUTE_SYMBOL]['data']) {
-            mostFavourateShops = this[ATTRIBUTE_SYMBOL]['data']['mostFavourateShops']
-            recommendedShops = this[ATTRIBUTE_SYMBOL]['data']['recommendedShops']
-        }
+        let data = this.getAttribute('data')
+        let mostFavourateShops = data['mostFavourateShops']
+        let recommendedShops = data['recommendedShops']
+        let focusData = data['focusData']
         return <div>
-            <div class={'title'} style={'font-size:16px;'}>超多人收藏的店！</div>
-            <div class="flex collection-store-group space-between" style={css.class}>
+            <Carousel data={focusData}/>
+            <div style={css.title}>超多人收藏的店！</div>
+            <div class="flex collection-store-group space-between">
                 {mostFavourateShops.map(item => {
                     return <CollectionStore data={item}/>
                 })}
@@ -113,7 +113,6 @@ export default class ListView {
         }
         if (name === 'data') {
             this[ATTRIBUTE_SYMBOL][name] = value
-            console.log(this[ATTRIBUTE_SYMBOL])
             this.root.innerHTML = ''
             this.render().appendTo(this.root)
             return value

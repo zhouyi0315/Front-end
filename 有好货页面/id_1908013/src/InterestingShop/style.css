@@ -1,0 +1,24 @@
+.box {
+    margin: 3.148vw;
+    display: flex;
+}
+.largeContainer {
+    width: 62.037vw;
+    height: 62.037vw;
+    border-radius: 1.852vw;
+    overflow: hidden;
+}
+.image {
+    display: inline-block;
+    width: 100%;
+}
+.smallContainer {
+    width: 30.093vw;
+    height: 30.093vw;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+.flex {
+    display: flex;
+}

@@ -29,6 +29,12 @@ export default class Img {
         return this.root.getAttribute(name)
     }
     setAttribute (name, value) {
+        if (name === 'style' && typeof value === 'object') {
+            for (let p in value) {
+                this.root.style[p] = value[p]
+            }
+            return
+        }
         this.root.setAttribute(name, value)
     }
     addEventListener (type, listener) {

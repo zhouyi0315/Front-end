@@ -12,9 +12,9 @@ export default class Carousel {
         this[EVENT_SYMBOL] = Object.create(null)
         this[STATE_SYMBOL] = Object.create(null)
         this[PROPERTY_SYMBOL].children = []
-        this._container = container
+        this.root = this.root
         this.data = null
-        this._container.classList.add('carousel')
+       //  this.root.classList.add('carousel')
         this._handler = null
         this.created()
     }
@@ -25,16 +25,17 @@ export default class Carousel {
     }
     created () {
         this.root = document.createElement('div')
+        this.root.classList.add('carousel')
     }
     render() {
         for (let d of this.data) {
             let img = document.createElement('img')
             img.src = d
-            this._container.appendChild(img)
+            this.root.appendChild(img)
         }
         let tl = new Timeline()
 
-        let children = Array.prototype.slice.call(this._container.children)
+        let children = Array.prototype.slice.call(this.root.children)
 
         let position = 0
         let offsetTimeStart = 0
@@ -84,8 +85,8 @@ export default class Carousel {
         let x = 0
         let startTransform
         let offset = 0
-        enableGesture(this._container)
-        this._container.addEventListener('mousedown', event => {
+        enableGesture(this.root)
+        this.root.addEventListener('mousedown', event => {
             tl.pause()
             let currentTime = Date.now();
 
@@ -99,7 +100,7 @@ export default class Carousel {
             clearTimeout(nextPicTimer)
             // startTransform = - position * 500
         })
-        this._container.addEventListener('pan', event => {
+        this.root.addEventListener('pan', event => {
             if (event.isVertical) { return }
 
             let current = children[position]
@@ -117,7 +118,7 @@ export default class Carousel {
             current.style.transition = 'ease 0s'
             current.style.transform = `translate(${-position * 500  + event.dx + offset}px)`
         })
-        this._container.addEventListener('panend', event => {
+        this.root.addEventListener('panend', event => {
             if (event.isVertical) { return }
             let isLeft
             if (event.isFlick && Math.abs(event.dx) > Math.abs(event.dy)) {
@@ -174,7 +175,7 @@ export default class Carousel {
             //     child.style.transform = `translate(${-position * 500}px)`
             // }
         })
-        this._container.addEventListener('mousedown', event => {
+        this.root.addEventListener('mousedown', event => {
             event.preventDefault()
         })
         // let t = 0
@@ -206,7 +207,7 @@ export default class Carousel {
         //     }
         // }
         //
-        // this._container.addEventListener('mousedown', start)
+        // this.root.addEventListener('mousedown', start)
     }
     mounted () {
 
